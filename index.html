@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="C4Nb4PgaOVnqqq89GFEqdw">
+<head data-page-node-id="dlGR9R8r3OjQPhm1MyylHu">
+<meta charset="UTF-8" data-page-node-id="v4FmLuCIIBNyRdeNyd3yLB">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="07tFr5j4sNzkJ9A6eBauzW">
+<title>2026 全国自考报考追踪</title>
+<style>
+:root{
+  --indigo:#4338ca; --indigo-deep:#312e81; --indigo-soft:#6366f1;
+  --teal:#0d9488; --amber:#d97706; --amber-bg:#fef3c7;
+  --green:#059669; --green-bg:#d1fae5;
+  --red:#dc2626; --red-bg:#fee2e2;
+  --gray:#6b7280; --gray-bg:#f3f4f6;
+  --ink:#111827; --ink-2:#374151; --ink-3:#6b7280;
+  --line:#e5e7eb; --bg:#f8f9fc; --card:#ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.skip{position:absolute;left:-9999px}
+.skip:focus{position:fixed;left:8px;top:8px;background:#fff;padding:8px 16px;border-radius:8px;z-index:99}
+
+/* ===== Hero ===== */
+.hero{background:linear-gradient(135deg,#4338ca 0%,#6d28d9 55%,#7c3aed 100%);color:#fff;padding:52px 24px 96px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero::before{content:"";position:absolute;right:60px;bottom:-160px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.eyebrow{letter-spacing:.35em;font-size:12px;opacity:.75;font-weight:600;margin-bottom:14px}
+.hero h1{font-size:44px;line-height:1.2;font-weight:800}
+.hero h1 .hl{color:#fbbf24}
+.hero .sub{margin-top:14px;font-size:15px;opacity:.85;max-width:560px}
+.hero .sub b{color:#fde68a;font-weight:700}
+.exam-badge{width:158px;height:158px;border-radius:50%;border:6px solid #fbbf24;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.08);flex-shrink:0;text-align:center;padding:12px}
+.exam-badge .m{font-size:14px;font-weight:600;opacity:.9;letter-spacing:.15em}
+.exam-badge .d{font-size:34px;font-weight:800;line-height:1.15;white-space:nowrap}
+.exam-badge .t{font-size:11px;opacity:.85;margin-top:2px}
+
+/* ===== Stats ===== */
+.stats-wrap{position:sticky;top:0;z-index:50;padding:10px 0 6px;background:linear-gradient(to bottom,rgba(248,249,252,.98) 70%,rgba(248,249,252,0));backdrop-filter:blur(6px)}
+.stats{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.stat{background:var(--card);border-radius:14px;padding:14px 20px;text-align:center;box-shadow:0 4px 16px rgba(49,46,129,.08);border-top:4px solid var(--indigo)}
+.stat.g{border-top-color:var(--green)}
+.stat.o{border-top-color:var(--amber)}
+.stat .num{font-size:30px;font-weight:800;color:var(--indigo)}
+.stat.g .num{color:var(--green)}
+.stat.o .num{color:var(--amber)}
+.stat .lbl{font-size:13px;color:var(--ink-3);margin-top:0}
+
+/* ===== Notice ===== */
+.notice{max-width:1200px;margin:22px auto 0;padding:0 24px}
+.notice-box{background:#fffbea;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:10px;padding:12px 16px;font-size:14px;color:#78350f}
+.notice-box b{color:#92400e}
+
+/* ===== Mode tabs ===== */
+.mode-tabs{display:inline-flex;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px;margin-top:20px}
+.mode-tab{padding:6px 20px;border-radius:999px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;border:none;background:transparent;transition:.15s;font-family:inherit}
+.mode-tab.on{background:#fbbf24;color:#312e81}
+.mode-tab:not(.on){opacity:.85}
+
+/* ===== Search & Filters ===== */
+.search{max-width:1200px;margin:22px auto 0;padding:0 24px}
+.search-box{width:100%;padding:13px 18px;font-size:15px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);outline:none;transition:.15s;font-family:inherit}
+.search-box:focus{border-color:var(--indigo-soft);box-shadow:0 0 0 3px rgba(99,102,241,.15)}
+.search-box::placeholder{color:#9ca3af}
+.filters{max-width:1200px;margin:16px auto 0;padding:0 24px}
+.filter-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.chip{padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink-2);font-size:13px;cursor:pointer;transition:.15s;user-select:none}
+.chip:hover{border-color:var(--indigo-soft);color:var(--indigo)}
+.chip.on{background:var(--indigo-deep);border-color:var(--indigo-deep);color:#fff;font-weight:600}
+
+/* ===== Cards ===== */
+.cards{max-width:1200px;margin:26px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:20px}
+.pcard{background:var(--card);border-radius:16px;border:1px solid var(--line);overflow:hidden;transition:.2s;cursor:pointer;display:flex;flex-direction:column}
+.pcard:hover{box-shadow:0 10px 28px rgba(49,46,129,.12);transform:translateY(-2px)}
+.pc-head{padding:16px 18px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pc-name{font-size:21px;font-weight:800;letter-spacing:.05em}
+.pc-region{font-size:11px;color:var(--ink-3);background:var(--gray-bg);padding:2px 8px;border-radius:6px}
+.pc-status{margin-left:auto;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.st-live{background:var(--green-bg);color:var(--green)}
+.st-warn{background:var(--amber-bg);color:var(--amber)}
+.st-end{background:#e0e7ff;color:var(--indigo)}
+.st-idle{background:var(--gray-bg);color:var(--gray)}
+
+/* steps */
+.steps{display:flex;align-items:flex-start;padding:14px 14px 4px;position:relative}
+.steps::before{content:"";position:absolute;top:26px;left:44px;right:44px;height:2px;background:var(--line)}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;min-width:0}
+.dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:#fff;border:2px solid var(--line);color:var(--gray);margin-bottom:6px}
+.step.done .dot{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.step.done::after{content:""}
+.s-label{font-size:11px;color:var(--ink-2);font-weight:600;white-space:nowrap}
+.s-sub{font-size:10px;color:var(--ink-3);white-space:nowrap}
+
+/* details */
+.pc-body{padding:8px 18px 14px;flex:1}
+.node{margin-bottom:10px}
+.node-h{display:flex;align-items:baseline;gap:8px}
+.node-t{font-size:13px;font-weight:700;color:var(--ink)}
+.node-k{font-size:11px;color:var(--ink-3)}
+.node-d{font-size:12.5px;color:var(--ink-2);margin-top:1px;word-break:break-all}
+.node-d .fee{color:var(--red);font-weight:600}
+.pc-foot{border-top:1px dashed var(--line);padding:10px 18px 14px;display:flex;justify-content:space-between;align-items:center}
+.src-link{font-size:12px;color:var(--indigo);text-decoration:none;font-weight:600}
+.src-link:hover{text-decoration:underline}
+.toggle{font-size:12px;color:var(--ink-3);background:none;border:none;cursor:pointer}
+.toggle:hover{color:var(--indigo)}
+.note{background:var(--gray-bg);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--ink-3);margin-top:10px;line-height:1.7}
+.note b{color:var(--ink-2)}
+.checked{font-size:11px;color:#9ca3af;margin-top:6px}
+
+.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--ink-3);font-size:14px}
+
+footer{max-width:1200px;margin:40px auto 30px;padding:18px 24px;border-top:1px solid var(--line);font-size:12px;color:#9ca3af;text-align:center;line-height:1.8}
+footer a{color:var(--indigo);text-decoration:none}
+
+@media(max-width:760px){
+  .hero h1{font-size:30px}
+  .stats{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .stat .num{font-size:24px}
+  .cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body data-page-node-id="oJYuSKlhFcTSOtBLUTvmWT">
+<a class="skip" href="#main" data-page-node-id="sThp3vUJrgnBE2FSlk71aP">跳到主内容</a>
+
+<header class="hero" data-page-node-id="qw02gaNtZ8hHyc1js5TAQq">
+  <div class="hero-inner" data-page-node-id="arDMF2wCDrVfSuToNB4hLX">
+    <div data-page-node-id="aipMLAIOSdNOq5fSRdAzEx">
+      <div class="eyebrow" data-page-node-id="LuW7ExJ2wJsBS1cekD8605">SELF-TAUGHT EXAM TRACKER</div>
+      <h1 data-page-node-id="a2JandENAeSNmPdaoHhhwx">2026 全国<br data-page-node-id="5IGe5inqBonzHPNBYNBG8b"><span class="hl" data-page-node-id="sCiqQYUaC7iRFBzDpRpihr">自学考试报考追踪</span></h1>
+      <p class="sub" >聚合 <b >31 个省市区</b>教育考试院官方公告，按 <b>新生注册 → 课程报考 → 缴费 → 准考证 → 统考 → 查分 → 毕业申请</b> 七节点拆分展示。</p>
+      <div class="mode-tabs" role="tablist">
+        <button class="mode-tab on" id="tab2026" onclick="setMode('2026')">2026 实时</button>
+        <button class="mode-tab" id="tab2025" onclick="setMode('2025')">2025 参考</button>
+      </div>
+    </div>
+    <div class="exam-badge" id="examBadge">
+      <div class="m" id="badgeM">10月</div>
+      <div class="d" id="badgeD">24-25</div>
+      <div class="t" id="badgeT">全国统考日期</div>
+    </div>
+  </div>
+</header>
+
+<section class="stats-wrap" id="statsWrap">
+<div class="stats" aria-label="统计">
+  <div class="stat"><div class="num" id="stTotal">31</div><div class="lbl">省份总数</div></div>
+  <div class="stat g"><div class="num" id="stOpen">0</div><div class="lbl" id="stOpenLbl">报名通道开启中</div></div>
+  <div class="stat o"><div class="num" id="stClosed">0</div><div class="lbl" id="stClosedLbl">本期报名已截止</div></div>
+</div>
+</section>
+
+<section class="notice">
+  <div class="notice-box" id="noticeBox">📅 <b>2026 下半年（10 月考期）实时追踪：</b>全国统考定于 <b>10 月 24-25 日</b>。各省新生注册与课程报考 8 月下旬起陆续开闸，<b>绿色</b>为报名进行中，<b>蓝色</b>为本期已截止（等下一考期），<b>琥珀色</b>为即将开始。点击卡片展开完整节点与备注。</div>
+</section>
+
+<main id="main" data-page-node-id="vkk5EnjGJ8Ut70su9TZoFB">
+<section class="search">
+  <input type="text" class="search-box" id="searchBox" placeholder="🔍 搜索省份，如：四川 / 广东 / 内蒙古…" aria-label="搜索省份">
+</section>
+<section class="filters" data-page-node-id="T1CxkTCHYj87BdCmrDK367">
+  <div class="filter-row" id="statusRow" data-page-node-id="T6p2C2y5OP8OOHSGpbea5h"></div>
+  <div class="filter-row" id="regionRow" data-page-node-id="peWvb7zLZoWEsTa9iGFLEr"></div>
+</section>
+<section class="cards" id="cards" data-page-node-id="91wDDr3wJj4CZRmYLZbfvm"></section>
+</main>
+
+<footer data-page-node-id="1M0UNPUO1z1vzWklQGWKro">
+  数据来源：各省教育考试院官网公告（卡片内附原文链接）· 统考日期依据教育部教育考试院 2026 年全国统考课程安排<br data-page-node-id="SAwj0a6n0b5pG9cokOB9Pk">
+  本页为信息聚合，报考以各省官方最新公告为准 · 数据核查日期 2026-09-10
+</footer>
+
+<script src="data.js"></script>
+<script>
+/* 2026 年 10 月考期全国自考报考数据（来自 data.js） */
+const EXAM = "10月24-25日";
+/* status 不再写死，由 calcStatus() 根据当前日期自动计算 */
+const DEADLINES = {
+  "北京": {start:"2026-08-30",end:"2026-09-11"},
+  "天津": {start:"2026-05-25",end:"2026-05-29"},
+  "河北": {start:"2026-09-01",end:"2026-09-10"},
+  "山西": {start:"2026-08-25",end:"2026-08-31"},
+  "内蒙古": {start:"2026-09-14",end:"2026-09-18"},
+  "辽宁": {start:"2026-09-01",end:"2026-09-07"},
+  "吉林": {start:"2026-08-25",end:"2026-09-14"},
+  "黑龙江": {start:"2026-08-20",end:"2026-09-10"},
+  "上海": {start:"2026-09-01",end:"2026-09-06"},
+  "江苏": {start:"2026-09-01",end:"2026-09-05"},
+  "浙江": {start:"2026-07-06",end:"2026-07-10"},
+  "安徽": {start:"2026-09-03",end:"2026-09-07"},
+  "福建": {start:"2026-09-03",end:"2026-09-10"},
+  "江西": {start:"2026-06-19",end:"2026-07-20"},
+  "山东": {start:"2026-06-18",end:"2026-06-24"},
+  "河南": {start:"2026-09-01",end:"2026-09-03"},
+  "湖北": {start:"2026-08-24",end:"2026-08-28"},
+  "湖南": {start:"2026-08-19",end:"2026-08-31"},
+  "广东": {start:"2026-08-25",end:"2026-09-05"},
+  "广西": {start:"2026-08-24",end:"2026-09-02"},
+  "海南": {start:"2026-07-06",end:"2026-07-15"},
+  "重庆": {start:"2026-09-01",end:"2026-09-15"},
+  "四川": {start:"2026-09-01",end:"2026-09-10"},
+  "贵州": {start:"2026-06-11",end:"2026-06-18"},
+  "云南": {start:"2026-09-02",end:"2026-09-08"},
+  "西藏": {start:"2026-09-23",end:"2026-09-28"},
+  "陕西": {start:"2026-09-05",end:"2026-09-11"},
+  "甘肃": {start:"2026-09-03",end:"2026-09-09"},
+  "青海": {start:"2026-09-01",end:"2026-09-05"},
+  "宁夏": {start:"2026-09-07",end:"2026-09-11"},
+  "新疆": {start:"2026-08-31",end:"2026-09-10"}
+};
+calcStatus = (d) => {
+  if (!DEADLINES[d.n]) return "closed";
+  const {start,end} = DEADLINES[d.n];
+  const now = new Date(); now.setHours(0,0,0,0);
+  const s = new Date(start); s.setHours(0,0,0,0);
+  const e = new Date(end); e.setHours(0,0,0,0);
+  if (now < s) return "soon";
+  if (now > e) return "closed";
+  return "open";
+};
+{n:"北京",r:"直辖市",st:"open",src:"https://www.bjeea.cn/html/selfstudy/xxfbt/2026/0708/88252.html",srcName:"北京教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","8月30日9:00 – 9月3日17:00","网上提交注册信息，逾期不予办理；信息审核截止9月4日17:00"],
+ ["课程报考","8月30日9:00 – 9月11日17:00","在籍考生同期报考，选考区+选课程"],
+ ["网上缴费","9月9日9:00 – 9月11日17:00","笔试课程 30元/科次，北京市公共支付平台"],
+ ["准考证打印","10月19日起至考试结束","个人中心选择'2610'考期，A4打印"],
+ ["全国统考","10月24-25日","笔试课程考试"],
+ ["成绩发布","12月1日","个人中心查询"],
+ ["毕业申请","上半年6月 / 下半年12月","符合条件者申报，以主考院校通知为准"]],
+ note:"北京自考一年两次（4月/10月）。新生注册已截止（9月3日）；在籍考生报考、新生缴费至9月11日17:00。非京籍需持《北京市居住证》；仅支持电脑端操作。"},
+{n:"天津",r:"直辖市",st:"closed",src:"http://www.zhaokao.net",srcName:"天津市教育招生考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","5月25日8:30 – 5月29日20:00","10月考期注册已于5月结束"],
+ ["课程报考","5月25日8:30 – 5月29日20:00","注册报考同步进行"],
+ ["网上缴费","报考时同步缴费","以报名系统为准"],
+ ["准考证打印","考前一周","报名系统下载"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"天津10月考期报名在5月进行，为本期最早截止省份；错过等2027年4月考期。"},
+{n:"河北",r:"省",st:"open",src:"http://www.hebeea.edu.cn",srcName:"河北省教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月1日 – 10日 8:00-22:00","注册报考同步进行"],
+ ["课程报考","9月1日 – 10日 8:00-22:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","报名系统自行打印"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"报名期间每日8:00-22:00开放。今天（9月10日）是报名最后一天，请尽快完成。"},
+{n:"山西",r:"省",st:"closed",src:"http://www.sxkszx.cn",srcName:"山西省招生考试管理中心",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","8月25日8:00 – 8月31日18:00","注册报考同步"],
+ ["课程报考","8月25日8:00 – 8月31日18:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前十天内在系统打印",""],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月上旬","以考试中心公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"报名已于8月31日18:00截止。"},
+{n:"内蒙古",r:"自治区",st:"soon",src:"https://www.nm.zsks.cn/kszs/zxks/ggl/202608/t20260817_46673.html",srcName:"内蒙古自治区教育招生考试中心",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月14日9:00 – 9月18日17:00","尚未开始"],
+ ["课程报考","9月14日9:00 – 9月18日17:00","注册报考同步"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周","以考试中心公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试中心公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"内蒙古已发正式公告：报名窗口仅5天（9月14-18日17:00），逾期不设补报；公安管理学专业预报名9月7-9日（已结束）；仅设呼和浩特等6个考区。"},
+{n:"辽宁",r:"省",st:"closed",src:"https://www.lnzsks.com",srcName:"辽宁招生考试之窗",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","9月1日 – 9月7日","注册报考同步"],
+ ["课程报考","9月1日 – 9月7日",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前两周内","以辽宁招生考试之窗公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以官网公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"报名已于9月7日截止。"},
+{n:"吉林",r:"省",st:"open",src:"http://www.jleea.com.cn",srcName:"吉林省教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","8月25日 – 9月13日","新生注册通道"],
+ ["课程报考","8月25日 – 9月14日","比注册晚一天截止"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周","以考试院公告为准"],
+ ["全国统考","10月24-25日","课程安排已于5月公布"],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"今天（9月9日）仍在报名期内。药物制剂（专升本）专业自2026下半年起停考过渡，不再接受新生。"},
+{n:"黑龙江",r:"省",st:"open",src:"https://www.hljea.org.cn/info/1018/13873.htm",srcName:"黑龙江省招生考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","8月25日 – 9月6日","审核至9月7日17:00"],
+ ["课程报考","8月20日 – 9月10日","在籍考生报考期"],
+ ["网上缴费","报考时同步缴费","银联/微信支付，缴费后不改不退"],
+ ["准考证打印","10月上旬关注公告","黑龙江招生考试信息港自考频道打印"],
+ ["全国统考","10月24-25日","上午9:00-11:30，下午14:30-17:00"],
+ ["成绩查询","11月下旬","考生自助服务系统查询"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"今天（9月10日）是在籍考生报考最后一天。新生注册已于9月6日截止，仅剩老生可报；缴费后不改不退。成绩拟11月下旬发布。"},
+{n:"上海",r:"直辖市",st:"closed",src:"https://www.shmeea.edu.cn",srcName:"上海市教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月1日9:00 – 9月6日12:00","注册报考同步"],
+ ["课程报考","9月1日9:00 – 9月6日12:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前两周左右","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"注册报考已于9月6日12:00截止，无延期安排；错过等2027年4月考期（参考往年节奏，12月或有1月增考通道，以考试院公告为准）。"},
+{n:"江苏",r:"省",st:"closed",src:"https://jyj.yangzhou.gov.cn/jygl/zsks/zxksxx/art/2026/art_87edd6326713461bb98d7688f57b31e9.html",srcName:"江苏省教育考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","9月1日9:00 – 9月5日17:00","新生注册与新旧生课程报考同步"],
+ ["课程报考","9月1日9:00 – 9月5日17:00",""],
+ ["网上缴费","报考时同步缴费","每日22:00-次日8:00系统维护勿缴费"],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"身份验证每日限3次；中药学/药学/护理学专业须先过资格审核。报名已于9月5日17:00截止。"},
+{n:"浙江",r:"省",st:"closed",src:"https://www.zjzs.net",srcName:"浙江省教育考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","7月6日8:30 – 7月8日16:30","10月考期7月即截止报名"],
+ ["课程报考","7月6日8:30 – 7月10日16:30",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24日","浙江部分考期仅24日一天，以准考证为准"],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"浙江10月考期报名7月即结束，为本期最早。"},
+{n:"安徽",r:"省",st:"closed",src:"https://www.szyq.gov.cn/public/6623407/164081181.html",srcName:"安徽省教育招生考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","9月3日9:00 – 9月7日17:00","注册后上传照片待审"],
+ ["课程报考","9月3日9:00 – 9月7日17:00","限报一次、最多4门，一次完成"],
+ ["网上缴费","截止9月7日19:00","缴费成功后不退不改不可补报"],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"每名考生报名期间只能报考一次（最多4门），多专业课程须一次性完成——选课务必先规划。"},
+{n:"福建",r:"省",st:"open",src:"https://www.eeafj.cn",srcName:"福建省教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月3日9:00 – 9月10日17:00","注册报考同步"],
+ ["课程报考","9月3日9:00 – 9月10日17:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日","考试招生规定已发布"],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"今天（9月10日）17:00 报名最后一天，请尽快完成。考试招生规定已发布。"},
+{n:"江西",r:"省",st:"closed",src:"http://www.jxeea.cn",srcName:"江西省教育考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","6月19日 – 6月28日","10月考期6月即截止"],
+ ["课程报考","6月19日9:00 – 7月20日17:00","新生注册后课程报考延长至7月20日"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"江西10月考期注册6月结束，仅课程报考延至7月20日。"},
+{n:"山东",r:"省",st:"closed",src:"https://www.sdzk.cn",srcName:"山东省教育招生考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","6月18日 – 6月21日","10月考期6月即截止"],
+ ["课程报考","6月18日 – 6月24日 8:30-17:30",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前十天内在系统打印",""],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"山东10月考期报名6月即结束。"},
+{n:"河南",r:"省",st:"closed",src:"https://www.haeea.cn",srcName:"河南省教育考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","9月1日9:00 – 9月3日18:00","窗口极短，仅3天"],
+ ["课程报考","9月1日9:00 – 9月3日18:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"河南报名窗口仅9月1-3日，已截止。"},
+{n:"湖北",r:"省",st:"closed",src:"http://www.hbea.edu.cn",srcName:"湖北省教育考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","8月24日9:00 – 8月28日17:00","注册报考同步"],
+ ["课程报考","8月24日9:00 – 8月28日17:00","全部在8月完成"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前十天内在系统打印",""],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"湖北8月即截止报名。"},
+{n:"湖南",r:"省",st:"closed",src:"https://jyt.hunan.gov.cn/jyt/sjyt/hnsjyksy/web/ksyzcfg/202605/t20260515_33977960.html",srcName:"湖南省教育考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生入籍","8月19日9:00 – 8月24日17:00","湖南称注册为'入籍'"],
+ ["课程报考","8月24日9:00 – 8月31日17:00","潇湘自考APP/服务平台"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","服务平台下载"],
+ ["全国统考","10月24-25日","开考96个专业710门课程"],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"湖南10月考期：入籍8月19-24日、报考至8月31日，均已截止。开考专业课程安排今年5月已公布。"},
+{n:"广东",r:"省",st:"closed",src:"https://gzzk.gz.gov.cn/gkmlpt/content/10/10956/post_10956400.html",srcName:"广州市招考办（广东省公告）",chk:"2026-09-09",
+ nodes:[
+ ["新生预报名","8月25日10:00 – 8月28日12:00","广东分预报名+正式报名两段"],
+ ["正式报名","8月25日10:00 – 8月28日17:00","采集照片获取准考证号"],
+ ["课程报考","9月1日14:00 – 9月4日17:00",""],
+ ["缴费截止","9月2日10:00 – 9月5日17:00",""],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"广东新生8月28日即截止报名，报考9月4日、缴费9月5日截止，均已结束。广东一年三考（1/4/10月）。"},
+{n:"广西",r:"自治区",st:"closed",src:"https://www.gxeea.cn",srcName:"广西招生考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","8月24日9:00 – 8月29日17:00","注册报考同步"],
+ ["课程报考","8月24日9:00 – 9月2日18:00","比注册多几天"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"广西9月2日18:00已截止报考。"},
+{n:"海南",r:"省",st:"closed",src:"https://www.haikou.gov.cn/zxfw/smfw/jy/gjjyks/crgkzxks/202607/t1534740.shtml",srcName:"海南省考试局",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","7月6日8:30 – 7月15日17:30","统考报考期即注册期"],
+ ["课程报考","7月6日8:30 – 7月15日17:30","双休日照常"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试局公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试局公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"海南7月中旬即截止报名，为本期最早之一。新生须在平台完成人证核验后方可报考。"},
+{n:"重庆",r:"直辖市",st:"open",src:"https://www.cqksy.cn",srcName:"重庆市教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月1日9:00 – 9月15日15:00","注册报考同步"],
+ ["课程报考","9月1日9:00 – 9月15日15:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"重庆窗口至9月15日15:00，无延期补报，本期最晚截止之一，仍在报名期内。"},
+{n:"四川",r:"省",st:"open",src:"https://www.sceea.cn/Html/202608/Newsdetail_4929.html",srcName:"四川省教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月1日 – 9月3日 9:00-22:00","社会型专业；审核至9月4日17:00"],
+ ["课程报考","9月7日 – 9月10日 9:00-22:00","在籍及已注册考生选课缴费（以考试院系统为准）"],
+ ["网上缴费","9月7日 – 9月10日 9:00-22:00","35元/科，与报考同步截止"],
+ ["准考证打印","10月20日9:00起","以考试院公告为准"],
+ ["全国统考","10月24-25日","262次考试课表已公布"],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"四川新生注册已结束（9月3日），课程报考/缴费今日（9月10日）22:00截止，无补报；9月10日22:00后不可退费、更改。应用型考生咨询主考学校。"},
+{n:"贵州",r:"省",st:"closed",src:"http://zsksy.guizhou.gov.cn",srcName:"贵州省招生考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","6月11日10:00 – 6月17日17:00","10月考期6月即截止"],
+ ["课程报考","6月11日10:00 – 6月18日17:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"贵州10月考期报名6月即结束。"},
+{n:"云南",r:"省",st:"closed",src:"https://www.ynzs.cn",srcName:"云南省招生考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","9月2日9:00 – 9月8日17:00","注册报考同步"],
+ ["课程报考","9月2日9:00 – 9月8日17:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"云南9月8日17:00已截止。"},
+{n:"西藏",r:"自治区",st:"soon",src:"http://zsks.xizang.gov.cn",srcName:"西藏自治区教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月23日10:00 – 9月28日18:00","暂参考2025年安排，以最新公告为准"],
+ ["课程报考","9月23日10:00 – 9月28日18:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"西藏报名最晚（9月23-28日），标注为参考往年，开放前请留意考试院最新公告。"},
+{n:"陕西",r:"省",st:"open",src:"https://www.sneea.cn",srcName:"陕西省教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月5日8:00 – 9月11日18:00","首次报考新生须本人持身份证到注册考区采集照片（首次注册现场确认要求以考试院公告为准）"],
+ ["课程报考","9月5日8:00 – 9月11日18:00","注册报考同步"],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月下旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"新生信息注册确认已于9月9日18:00截止；在籍老生课程报考至9月11日18:00、缴费至9月12日18:00。"},
+{n:"甘肃",r:"省",st:"closed",src:"https://www.ganseea.cn",srcName:"甘肃省教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月3日 – 9月9日 8:30-18:00","注册报考同步"],
+ ["课程报考","9月3日 – 9月9日 8:30-18:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"甘肃选课缴费已于9月9日18:00截止（新考生注册9月6日已截止）。"},
+{n:"青海",r:"省",st:"closed",src:"http://www.qhjyks.com",srcName:"青海省教育招生考试院",chk:"2026-09-09",
+ nodes:[
+ ["新生注册","9月1日9:00 – 9月5日18:00","注册报考同步"],
+ ["课程报考","9月1日9:00 – 9月5日18:00",""],
+ ["网上缴费","报考时同步缴费",""],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"青海9月5日已截止。"},
+{n:"宁夏",r:"自治区",st:"open",src:"https://www.nxjyks.cn",srcName:"宁夏教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","9月7日9:00 – 9月10日18:00","建档注册（注册报考同步）"],
+ ["审核确认","9月7日9:00 – 9月11日12:00","以考试院公告为准"],
+ ["课程报考","9月7日9:00 – 9月11日17:00","选课截止9月11日17:00"],
+ ["网上缴费","9月7日9:00 – 9月11日18:00","缴费截止9月11日18:00"],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"宁夏注册今日（9月10日）18:00截止；审核确认9月11日12:00、选课11日17:00、缴费11日18:00分节点关闭，请尽快完成。"},
+{n:"新疆",r:"自治区",st:"open",src:"https://www.xjzk.gov.cn",srcName:"新疆维吾尔自治区教育考试院",chk:"2026-09-10",
+ nodes:[
+ ["新生注册","8月31日12:00 – 9月8日18:00","原定9月4日，官方延期；注册已截止"],
+ ["课程报考","8月31日12:00 – 9月9日18:00","延期后报考截止"],
+ ["网上缴费","8月31日12:00 – 9月10日18:00","延期后缴费最后节点"],
+ ["准考证打印","考前一周内","以考试院公告为准"],
+ ["全国统考","10月24-25日",""],
+ ["成绩查询","11月中旬","以考试院公告为准"],
+ ["毕业申请","上半年6月 / 下半年12月",""]],
+ note:"新疆官方发布延期公告：原截止9月4日，现新生注册9月8日18:00、课程报考9月9日18:00已截止，网上缴费今天（9月10日）18:00最后截止，逾期不补。"},
+];
+
+/* ============ 2025 年参考数据（真实报考节点，用于预估 2026 年节奏） ============ */
+/* 来源：自考365 / 教育在线 / 环球青藤 2025年10月考期汇总，三方交叉核对 */
+const REF2025 = {
+"北京":{reg:"8月31日9:00 – 9月4日17:00",sig:"8月31日 – 9月12日17:00",exam:"10月25-26日",more:"新生注册8月31日-9月4日；笔试课程报考至9月12日"},
+"天津":{reg:"5月26日 – 5月30日",sig:"5月26日 – 5月30日",exam:"10月25-26日",more:"系统服务时间每天8:30-21:00"},
+"河北":{reg:"6月10日 – 15日 8:00-22:00",sig:"6月10日 – 15日",exam:"10月25-26日",more:"补报名时间8月18日-19日"},
+"山西":{reg:"8月26日8:00 – 9月1日18:00",sig:"8月26日8:00 – 9月1日18:00",exam:"10月25-26日",more:"注册报考同步"},
+"内蒙古":{reg:"9月15日9:00 – 9月19日17:00",sig:"9月15日9:00 – 9月19日17:00",exam:"10月25-26日",more:"窗口仅5天"},
+"辽宁":{reg:"9月5日 – 9月12日",sig:"9月5日 – 9月12日",exam:"10月25-26日",more:"网上支付至9月13日"},
+"吉林":{reg:"8月22日 – 8月31日",sig:"8月22日 – 8月31日",exam:"10月25-26日",more:"每日开网9:00-16:00"},
+"黑龙江":{reg:"8月20日 – 9月6日",sig:"8月20日 – 9月10日",exam:"10月25-26日",more:"与2026年安排基本一致"},
+"上海":{reg:"9月2日9:00 – 9月7日12:00",sig:"9月2日9:00 – 9月7日12:00",exam:"10月25-26日",more:""},
+"江苏":{reg:"9月1日9:00 – 9月5日17:00",sig:"9月1日9:00 – 9月5日17:00",exam:"10月25-26日",more:"与2026年完全一致"},
+"浙江":{reg:"7月7日8:30 – 7月9日16:30",sig:"7月7日8:30 – 7月11日16:30",exam:"10月25-26日",more:"7月即截止报名"},
+"安徽":{reg:"9月1日9:00 – 9月5日17:00",sig:"9月1日9:00 – 9月5日17:00",exam:"10月25-26日",more:""},
+"福建":{reg:"9月3日9:00 – 9月10日18:00",sig:"9月3日9:00 – 9月11日18:00",exam:"10月25-26日",more:"新生信息确认至9月11日12:00"},
+"江西":{reg:"7月1日 – 7月10日",sig:"7月1日9:00 – 7月15日17:00",exam:"10月25-26日",more:"网上注册未通过校验者7月10-11日现场注册"},
+"山东":{reg:"6月18日 – 6月21日",sig:"6月18日 – 6月24日 8:30-17:00",exam:"10月25-26日",more:"与2026年基本一致"},
+"河南":{reg:"9月1日9:00 – 9月3日18:00",sig:"9月1日9:00 – 9月3日18:00",exam:"10月25-26日",more:"审核截止9月4日、缴费截止9月5日"},
+"湖北":{reg:"8月25日9:00 – 8月29日17:00",sig:"8月25日9:00 – 8月29日17:00",exam:"10月24-26日",more:""},
+"湖南":{reg:"8月22日9:00 – 9月1日17:00",sig:"8月22日9:00 – 9月1日17:00",exam:"10月25-26日",more:"首阶段入籍9月2-8日（分两阶段）"},
+"广东":{reg:"8月26日10:00 – 8月29日",sig:"9月2日14:00 – 9月5日17:00",exam:"10月25-26日",more:"新生预报名8月26-29日，报考9月2-5日"},
+"广西":{reg:"8月25日9:00 – 9月3日18:00",sig:"8月25日9:00 – 9月3日18:00",exam:"10月25-26日",more:""},
+"海南":{reg:"7月3日8:30 – 7月12日17:30",sig:"7月3日8:30 – 7月12日17:30",exam:"10月25-26日",more:"双休日照常"},
+"重庆":{reg:"9月1日9:00 – 9月15日15:00",sig:"9月1日9:00 – 9月15日15:00",exam:"10月25-26日",more:"与2026年完全一致"},
+"四川":{reg:"9月8日 – 9月11日 9:00-22:00",sig:"9月8日 – 9月11日",exam:"10月25-26日",more:"缴费9月9-11日；2026年提前至9月1日开始"},
+"贵州":{reg:"7月1日10:00 – 7月8日17:00",sig:"7月1日10:00 – 7月8日17:00",exam:"10月25-26日",more:""},
+"云南":{reg:"9月3日 – 9月9日",sig:"9月3日 – 9月9日",exam:"10月25-26日",more:""},
+"西藏":{reg:"9月23日10:00 – 9月28日18:00",sig:"9月23日10:00 – 9月28日18:00",exam:"10月25-26日",more:"与2026年参考值一致"},
+"陕西":{reg:"9月5日8:00 – 9月11日18:00",sig:"9月5日8:00 – 9月12日18:00",exam:"10月25-26日",more:""},
+"甘肃":{reg:"9月3日 – 9月6日 24:00",sig:"9月3日 – 9月9日 24:00",exam:"10月25-26日",more:"社会型新生注册9月3-6日，选课缴费至9月9日"},
+"青海":{reg:"9月1日9:00 – 9月4日22:00",sig:"9月1日9:00 – 9月5日18:00",exam:"10月25-26日",more:""},
+"宁夏":{reg:"9月1日9:00 – 9月5日17:00",sig:"9月1日9:00 – 9月5日17:00",exam:"10月25-26日",more:""},
+"新疆":{reg:"9月1日12:00 – 9月5日18:00",sig:"9月1日12:00 – 9月5日18:00",exam:"10月25-26日",more:"2026年延长至9月10日"}
+};
+
+/* ============ 状态判定说明 ============
+ open  = 今天(9/10)在报名窗口内 → 绿色"报名中"
+ closed= 本期报名已截止 → 蓝色"已截止"
+ soon  = 尚未开始（内蒙古9/14、西藏9/23）→ 琥珀色"即将开始"
+================================== */
+const STATUS = {
+  open:{txt:"● 报名进行中",cls:"st-live"},
+  closed:{txt:"○ 本期已截止",cls:"st-end"},
+  soon:{txt:"◔ 即将开始",cls:"st-warn"}
+};
+const STATUS_FILTERS = [
+  {k:"all",t:"全部状态"},
+  {k:"open",t:"● 报名进行中"},
+  {k:"soon",t:"◔ 即将开始"},
+  {k:"closed",t:"○ 本期已截止"},
+  {k:"early",t:"7月前截止",test:d=>["天津","浙江","山东","贵州","海南","江西"].includes(d.n)},
+  {k:"august",t:"8月截止",test:d=>["山西","湖北","湖南","广东","广西"].includes(d.n)}
+];
+const REGION_FILTERS = [{k:"all",t:"全部地区"},{k:"直辖市",t:"直辖市"},{k:"省",t:"省"},{k:"自治区",t:"自治区"}];
+
+let curStatus="all", curRegion="all", curMode="2026";
+const expanded = new Set();
+const searchBox=document.getElementById("searchBox");
+searchBox.addEventListener("input",renderCards);
+
+function setMode(m){
+  curMode=m;
+  document.getElementById("tab2026").classList.toggle("on",m==="2026");
+  document.getElementById("tab2025").classList.toggle("on",m==="2025");
+  const nb=document.getElementById("noticeBox");
+  if(m==="2025"){
+    nb.innerHTML='📖 <b>2025 年参考数据：</b>以下为 <b>2025 年 10 月考期</b>各省真实报考时间节点（统考 10 月 25-26 日），用于预估 2027 年及以后考期节奏。已截止 2026 考期的省份，可参照此节奏准备下一轮。<b>历史数据仅供参考</b>，以各省当年官方公告为准。';
+    document.getElementById("badgeM").textContent="2025";
+    document.getElementById("badgeD").textContent="10.25-26";
+    document.getElementById("badgeT").textContent="统考日期（参考）";
+  }else{
+    nb.innerHTML='📅 <b>2026 下半年（10 月考期）实时追踪：</b>全国统考定于 <b>10 月 24-25 日</b>。各省新生注册与课程报考 8 月下旬起陆续开闸，<b>绿色</b>为报名进行中，<b>蓝色</b>为本期已截止（等下一考期），<b>琥珀色</b>为即将开始。点击卡片展开完整节点与备注。';
+    document.getElementById("badgeM").textContent="10月";
+    document.getElementById("badgeD").textContent="24-25";
+    document.getElementById("badgeT").textContent="全国统考日期";
+  }
+  renderStats();
+  renderCards();
+}
+function renderStats(){
+  if(curMode==="2025"){
+    document.getElementById("stTotal").textContent="31";
+    document.getElementById("stOpen").textContent="—";
+    document.getElementById("stOpenLbl").textContent="2025考期已结束";
+    document.getElementById("stClosed").textContent="10.25-26";
+    document.getElementById("stClosedLbl").textContent="2025统考日期";
+  }else{
+    document.getElementById("stTotal").textContent="31";
+    document.getElementById("stOpen").textContent=DATA.filter(d=>calcStatus(d)==="open").length;
+    document.getElementById("stOpenLbl").textContent="报名通道开启中";
+    document.getElementById("stClosed").textContent=DATA.filter(d=>calcStatus(d)==="closed").length;
+    document.getElementById("stClosedLbl").textContent="本期报名已截止";
+  }
+}
+
+function renderFilters(){
+  const sr=document.getElementById("statusRow"), rr=document.getElementById("regionRow");
+  sr.innerHTML=""; rr.innerHTML="";
+  STATUS_FILTERS.forEach(f=>{
+    const b=document.createElement("button");
+    b.className="chip"+(curStatus===f.k?" on":"");
+    b.textContent=f.t;
+    b.onclick=()=>{curStatus=f.k;renderFilters();renderCards();};
+    sr.appendChild(b);
+  });
+  REGION_FILTERS.forEach(f=>{
+    const b=document.createElement("button");
+    b.className="chip"+(curRegion===f.k?" on":"");
+    b.textContent=f.t;
+    b.onclick=()=>{curRegion=f.k;renderFilters();renderCards();};
+    rr.appendChild(b);
+  });
+}
+
+function matchStatus(d){
+  if(curStatus==="all")return true;
+  const f=STATUS_FILTERS.find(x=>x.k===curStatus);
+  if(!f)return true;
+  if(f.test)return f.test(d);
+  return calcStatus(d)===curStatus;
+}
+
+function matchSearch(d){
+  const q=searchBox.value.trim().toLowerCase();
+  if(!q)return true;
+  /* 去掉常见后缀再匹配：输"四川省"也能命中"四川" */
+  const clean=s=>s.toLowerCase().replace(/(省|市|自治区|特别行政区)/g,"");
+  const name=clean(d.n);
+  const query=clean(q);
+  return name.includes(query) || d.n.toLowerCase().includes(q);
+}
+
+function stepState(d,idx){
+  /* 用今天 9/10 与各省节点粗对进度：报名类节点（0-2）若日期区间含9/10或已过→点亮 */
+  const cur=d.nodes[idx];
+  const txt=cur[1];
+  const passedOrRunning = dateState(txt);
+  return passedOrRunning;
+}
+/* 极简日期判断：出现在节点里的截止日与 9/10 比较 */
+function dateState(txt){
+  const m = txt.match(/(\d{1,2})月(\d{1,2})日/g);
+  if(!m)return "done"; /* 无明确日期（如"考前一周"）不点亮，视为未到 */
+  /* 取文本里最后一个日期作为代表（多为截止日） */
+  const last = m[m.length-1];
+  const mm = parseInt(last.match(/(\d{1,2})月/)[1]);
+  const dd = parseInt(last.match(/月(\d{1,2})日/)[1]);
+  if(mm<9 || (mm===9 && dd<=10)) return "done";
+  return "";
+}
+
+function cardHTML(d){
+  const st=STATUS[calcStatus(d)];
+  const isOpen=expanded.has(d.n);
+  if(curMode==="2025"){
+    const r=REF2025[d.n];
+    if(!r)return "";
+    const body=`
+      <div class="node"><div class="node-h"><span class="node-t">新生注册</span></div><div class="node-d">${r.reg}</div></div>
+      <div class="node"><div class="node-h"><span class="node-t">课程报考</span></div><div class="node-d">${r.sig}</div></div>
+      <div class="node"><div class="node-h"><span class="node-t">全国统考</span></div><div class="node-d">${r.exam}</div></div>
+      ${r.more?`<div class="node"><div class="node-h"><span class="node-t">其他节点</span></div><div class="node-d">${r.more}</div></div>`:""}`;
+    return `
+    <article class="pcard" onclick="toggle('${d.n}')">
+      <div class="pc-head">
+        <span class="pc-name">${d.n}</span>
+        <span class="pc-region">${d.r}</span>
+        <span class="pc-status st-warn">2025 真实节点</span>
+      </div>
+      <div class="pc-body" style="padding-top:12px">${body}</div>
+      <div class="pc-foot">
+        <a class="src-link" href="${d.src}" target="_blank" rel="noopener" onclick="event.stopPropagation()">⧉ ${d.srcName}</a>
+        <span class="toggle" style="cursor:default">参考模式</span>
+      </div>
+    </article>`;
+  }
+  const stepsOpen = d.nodes.slice(0,4).map((n,i)=>{
+    const cls = i<3 && calcStatus(d)!=="soon" ? (dateState(n[1])==="done"?"done":"") : "";
+    return `<div class="step ${cls}"><div class="dot">${i+1}</div><div class="s-label">${n[0]}</div></div>`;
+  }).join("");
+  const body = d.nodes.map(n=>`
+    <div class="node">
+      <div class="node-h"><span class="node-t">${n[0]}</span><span class="node-k">${n[2]?n[2].slice(0,0):""}</span></div>
+      <div class="node-d">${n[1]}</div>
+      ${n[2]?`<div class="node-d">${n[2]}</div>`:""}
+    </div>`).join("");
+  return `
+  <article class="pcard" onclick="toggle('${d.n}')">
+    <div class="pc-head">
+      <span class="pc-name">${d.n}</span>
+      <span class="pc-region">${d.r}</span>
+      <span class="pc-status ${st.cls}">${st.txt}</span>
+    </div>
+    <div class="steps">${stepsOpen}</div>
+    <div class="pc-body">${isOpen?body:""}</div>
+    ${isOpen?`<div class="note"><b>备注：</b>${d.note}</div>`:""}
+    <div class="pc-foot">
+      <a class="src-link" href="${d.src}" target="_blank" rel="noopener" onclick="event.stopPropagation()">⧉ ${d.srcName}</a>
+      <button class="toggle" onclick="event.stopPropagation();toggle('${d.n}')">${isOpen?"收起 ▲":"展开详情 ▼"}</button>
+    </div>
+    <div class="checked" style="padding:0 18px 12px">核查日期 ${d.chk} · 统考 ${EXAM}</div>
+  </article>`;
+}
+
+function renderCards(){
+  const list=DATA.filter(d=>matchStatus(d)&&matchSearch(d)&&(curRegion==="all"||d.r===curRegion));
+  const el=document.getElementById("cards");
+  const q=searchBox.value.trim();
+  el.innerHTML = list.length? list.map(cardHTML).join("") :
+    `<div class="empty">没有找到「${q}」相关的省份<br><span style="font-size:12px">试试输入省份简称，如：四川、广东、内蒙古</span></div>`;
+}
+function toggle(name){
+  expanded.has(name)?expanded.delete(name):expanded.add(name);
+  renderCards();
+}
+/* stats */
+renderStats();
+renderFilters();
+renderCards();
+</script>
+</body>
+</html>
