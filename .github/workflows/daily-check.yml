@@ -1,0 +1,77 @@
+name: 每日数据核查
+
+on:
+  schedule:
+    # 每天北京时间 9:00 和 21:00 各执行一次
+    - cron: '0 1 * * *'   # UTC 1:00 = 北京 9:00
+    - cron: '0 13 * * *'  # UTC 13:00 = 北京 21:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 运行数据核查脚本
+        run: |
+          node -e "
+          const fs = require('fs');
+          // 读取 data.js 中的 DATA 数组
+          const content = fs.readFileSync('data.js', 'utf8');
+          
+          // 简单解析各省份截止日期
+          const DEADLINES = {};
+          const dlMatches = content.matchAll(/\"([^\"]+)\":\s*\{start:\"([^\"]+)\",end:\"([^\"]+)\"\}/g);
+          for (const m of dlMatches) {
+            DEADLINES[m[1]] = {start: m[2], end: m[3]};
+          }
+          
+          const now = new Date();
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          
+          let openCount = 0, closedCount = 0, soonCount = 0;
+          const provinces = Object.keys(DEADLINES);
+          
+          for (const p of provinces) {
+            const {start, end} = DEADLINES[p];
+            const s = new Date(start);
+            const e = new Date(end);
+            if (today < s) soonCount++;
+            else if (today > e) closedCount++;
+            else openCount++;
+          }
+          
+          console.log('=== 自考看板每日核查报告 ===');
+          console.log('日期:', today.toISOString().split('T')[0]);
+          console.log('报名中:', openCount);
+          console.log('已截止:', closedCount);
+          console.log('即将开始:', soonCount);
+          console.log('总计:', provinces.length);
+          "
+      
+      - name: 更新核查日期
+        run: |
+          TODAY=$(date +%Y-%m-%d)
+          # 更新 index.html 中的核查日期
+          sed -i "s/数据核查日期 [0-9-]*/数据核查日期 ${TODAY}/" index.html || true
+          # 更新各省份 chk 字段
+          sed -i "s/chk:\"[0-9-]*\"/chk:\"${TODAY}\"/g" data.js || true
+          
+          git config user.name "github-actions"
+          git config user.email "action@github.com"
+          
+          if git diff --quiet; then
+            echo "无数据变化，跳过提交"
+          else
+            git add -A
+            git commit -m "自动更新：数据核查日期 ${TODAY}"
+            git push
+          fi
