@@ -153,7 +153,7 @@ footer a{color:var(--indigo);text-decoration:none}
 
 <section class="stats-wrap" id="statsWrap">
 <div class="stats" aria-label="统计">
-  <div class="stat" id="statTotal" title="重置筛选：显示全部"><div class="num" id="stTotal">31</div><div class="lbl">省份总数</div></div>
+  <div class="stat clickable" id="statTotal" onclick="clickStat('total')" title="重置筛选：显示全部"><div class="num" id="stTotal">31</div><div class="lbl">省份总数</div></div>
   <div class="stat g clickable" id="statOpen" onclick="clickStat('open')" title="筛选：只显示报名进行中"><div class="num" id="stOpen">0</div><div class="lbl" id="stOpenLbl">报名通道开启中</div></div>
   <div class="stat s clickable" id="statSoon" onclick="clickStat('soon')" title="筛选：只显示即将开始"><div class="num" id="stSoon">0</div><div class="lbl" id="stSoonLbl">即将开始</div></div>
   <div class="stat o clickable" id="statClosed" onclick="clickStat('closed')" title="筛选：只显示本期已截止"><div class="num" id="stClosed">0</div><div class="lbl" id="stClosedLbl">本期报名已截止</div></div>
