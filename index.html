@@ -37,14 +37,19 @@ body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif
 
 /* ===== Stats ===== */
 .stats-wrap{position:sticky;top:0;z-index:50;padding:10px 0 6px;background:linear-gradient(to bottom,rgba(248,249,252,.98) 70%,rgba(248,249,252,0));backdrop-filter:blur(6px)}
-.stats{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.stats{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .stat{background:var(--card);border-radius:14px;padding:14px 20px;text-align:center;box-shadow:0 4px 16px rgba(49,46,129,.08);border-top:4px solid var(--indigo)}
 .stat.g{border-top-color:var(--green)}
 .stat.o{border-top-color:var(--amber)}
-.stat .num{font-size:30px;font-weight:800;color:var(--indigo)}
+.stat.clickable{cursor:pointer;transition:.15s}
+.stat.clickable:hover{background:#f0efff;box-shadow:0 4px 20px rgba(49,46,129,.14)}
+.stat.active{box-shadow:0 0 0 3px var(--indigo),0 4px 16px rgba(49,46,129,.08)}
+.stat .num{font-size:24px;font-weight:800;color:var(--indigo)}
 .stat.g .num{color:var(--green)}
 .stat.o .num{color:var(--amber)}
-.stat .lbl{font-size:13px;color:var(--ink-3);margin-top:0}
+.stat.s{border-top-color:#7c3aed}
+.stat.s .num{color:#7c3aed}
+.stat .lbl{font-size:11px;color:var(--ink-3);margin-top:2px}
 .stat.clickable{cursor:pointer;transition:.15s}
 .stat.clickable:hover{background:#f0efff;box-shadow:0 4px 20px rgba(49,46,129,.14)}
 .stat.active{box-shadow:0 0 0 3px var(--indigo),0 4px 16px rgba(49,46,129,.08)}
@@ -118,7 +123,7 @@ footer a{color:var(--indigo);text-decoration:none}
 
 @media(max-width:760px){
   .hero h1{font-size:30px}
-  .stats{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:8px}
   .stat .num{font-size:24px}
   .cards{grid-template-columns:1fr}
 }
@@ -148,9 +153,10 @@ footer a{color:var(--indigo);text-decoration:none}
 
 <section class="stats-wrap" id="statsWrap">
 <div class="stats" aria-label="统计">
-  <div class="stat" id="statTotal" onclick="clickStat('total')" title="重置筛选：显示全部"><div class="num">31</div><div class="lbl">省份总数</div></div>
-  <div class="stat g" id="statOpen" onclick="clickStat('open')" title="筛选：只显示报名进行中"><div class="num" id="stOpen">0</div><div class="lbl" id="stOpenLbl">报名通道开启中</div></div>
-  <div class="stat o" id="statClosed" onclick="clickStat('closed')" title="筛选：只显示本期已截止"><div class="num" id="stClosed">0</div><div class="lbl" id="stClosedLbl">本期报名已截止</div></div>
+  <div class="stat" id="statTotal" title="重置筛选：显示全部"><div class="num" id="stTotal">31</div><div class="lbl">省份总数</div></div>
+  <div class="stat g clickable" id="statOpen" onclick="clickStat('open')" title="筛选：只显示报名进行中"><div class="num" id="stOpen">0</div><div class="lbl" id="stOpenLbl">报名通道开启中</div></div>
+  <div class="stat s clickable" id="statSoon" onclick="clickStat('soon')" title="筛选：只显示即将开始"><div class="num" id="stSoon">0</div><div class="lbl" id="stSoonLbl">即将开始</div></div>
+  <div class="stat o clickable" id="statClosed" onclick="clickStat('closed')" title="筛选：只显示本期已截止"><div class="num" id="stClosed">0</div><div class="lbl" id="stClosedLbl">本期报名已截止</div></div>
 </div>
 </section>
 
@@ -318,6 +324,10 @@ function clickStat(key){
     curStatus="open"; activeStat="open";
     document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
     document.getElementById("statOpen").classList.add("active");
+  }else if(key==="soon"){
+    curStatus="soon"; activeStat="soon";
+    document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
+    document.getElementById("statSoon").classList.add("active");
   }else if(key==="closed"){
     curStatus="closed"; activeStat="closed";
     document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
@@ -336,6 +346,8 @@ function renderStats(){
     document.getElementById("stTotal").textContent="31";
     document.getElementById("stOpen").textContent=DATA.filter(d=>calcStatus(d)==="open").length;
     document.getElementById("stOpenLbl").textContent="报名通道开启中";
+    document.getElementById("stSoon").textContent=DATA.filter(d=>calcStatus(d)==="soon").length;
+    document.getElementById("stSoonLbl").textContent="即将开始";
     document.getElementById("stClosed").textContent=DATA.filter(d=>calcStatus(d)==="closed").length;
     document.getElementById("stClosedLbl").textContent="本期报名已截止";
   }
