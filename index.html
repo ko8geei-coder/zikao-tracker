@@ -45,6 +45,9 @@ body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif
 .stat.g .num{color:var(--green)}
 .stat.o .num{color:var(--amber)}
 .stat .lbl{font-size:13px;color:var(--ink-3);margin-top:0}
+.stat.clickable{cursor:pointer;transition:.15s}
+.stat.clickable:hover{background:#f0efff;box-shadow:0 4px 20px rgba(49,46,129,.14)}
+.stat.active{box-shadow:0 0 0 3px var(--indigo),0 4px 16px rgba(49,46,129,.08)}
 
 /* ===== Notice ===== */
 .notice{max-width:1200px;margin:22px auto 0;padding:0 24px}
@@ -145,9 +148,9 @@ footer a{color:var(--indigo);text-decoration:none}
 
 <section class="stats-wrap" id="statsWrap">
 <div class="stats" aria-label="统计">
-  <div class="stat"><div class="num" id="stTotal">31</div><div class="lbl">省份总数</div></div>
-  <div class="stat g"><div class="num" id="stOpen">0</div><div class="lbl" id="stOpenLbl">报名通道开启中</div></div>
-  <div class="stat o"><div class="num" id="stClosed">0</div><div class="lbl" id="stClosedLbl">本期报名已截止</div></div>
+  <div class="stat" id="statTotal" onclick="clickStat('total')" title="重置筛选：显示全部"><div class="num">31</div><div class="lbl">省份总数</div></div>
+  <div class="stat g" id="statOpen" onclick="clickStat('open')" title="筛选：只显示报名进行中"><div class="num" id="stOpen">0</div><div class="lbl" id="stOpenLbl">报名通道开启中</div></div>
+  <div class="stat o" id="statClosed" onclick="clickStat('closed')" title="筛选：只显示本期已截止"><div class="num" id="stClosed">0</div><div class="lbl" id="stClosedLbl">本期报名已截止</div></div>
 </div>
 </section>
 
@@ -277,7 +280,7 @@ const STATUS_FILTERS = [
 ];
 const REGION_FILTERS = [{k:"all",t:"全部地区"},{k:"直辖市",t:"直辖市"},{k:"省",t:"省"},{k:"自治区",t:"自治区"}];
 
-let curStatus="all", curRegion="all", curMode="2026";
+let curStatus="all", curRegion="all", curMode="2026", activeStat=null;
 const expanded = new Set();
 const searchBox=document.getElementById("searchBox");
 searchBox.addEventListener("input",renderCards);
@@ -299,6 +302,27 @@ function setMode(m){
     document.getElementById("badgeT").textContent="全国统考日期";
   }
   renderStats();
+  renderCards();
+}
+function clickStat(key){
+  if(key==="total"){
+    curStatus="all"; activeStat=null;
+    document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
+  }else if(key==="open" && curStatus==="open"){
+    curStatus="all"; activeStat=null;
+    document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
+  }else if(key==="closed" && curStatus==="closed"){
+    curStatus="all"; activeStat=null;
+    document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
+  }else if(key==="open"){
+    curStatus="open"; activeStat="open";
+    document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
+    document.getElementById("statOpen").classList.add("active");
+  }else if(key==="closed"){
+    curStatus="closed"; activeStat="closed";
+    document.querySelectorAll(".stat").forEach(el=>el.classList.remove("active"));
+    document.getElementById("statClosed").classList.add("active");
+  }
   renderCards();
 }
 function renderStats(){
