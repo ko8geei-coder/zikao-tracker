@@ -15,59 +15,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-      
-      - name: 运行数据核查脚本
+
+      - name: 核查报告
         run: |
           node -e "
           const fs = require('fs');
-          // 读取 data.js 中的 DATA 数组
-          const content = fs.readFileSync('data.js', 'utf8');
-          
-          // 简单解析各省份截止日期
-          const DEADLINES = {};
-          const dlMatches = content.matchAll(/\"([^\"]+)\":\s*\{start:\"([^\"]+)\",end:\"([^\"]+)\"\}/g);
-          for (const m of dlMatches) {
-            DEADLINES[m[1]] = {start: m[2], end: m[3]};
-          }
-          
-          const now = new Date();
-          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-          
-          let openCount = 0, closedCount = 0, soonCount = 0;
-          const provinces = Object.keys(DEADLINES);
-          
-          for (const p of provinces) {
-            const {start, end} = DEADLINES[p];
-            const s = new Date(start);
-            const e = new Date(end);
-            if (today < s) soonCount++;
-            else if (today > e) closedCount++;
-            else openCount++;
-          }
-          
+          // 数据已内联在 index.html（单文件设计），不再读取 data.js
+          const src = fs.readFileSync('index.html','utf8');
+          const chk = [...src.matchAll(/chk:\"(\d{4}-\d{2}-\d{2})\"/g)].map(m => m[1]);
+          const ends = [...src.matchAll(/end:\"(\d{4}-\d{2}-\d{2})\"/g)].map(m => m[1]);
+          const today = new Date().toISOString().split('T')[0];
           console.log('=== 自考看板每日核查报告 ===');
-          console.log('日期:', today.toISOString().split('T')[0]);
-          console.log('报名中:', openCount);
-          console.log('已截止:', closedCount);
-          console.log('即将开始:', soonCount);
-          console.log('总计:', provinces.length);
+          console.log('日期:', today);
+          console.log('chk 字段数:', chk.length);
+          console.log('未过期节点数:', ends.filter(d => d >= today).length);
+          console.log('最近核查日:', chk.sort().pop() || '无');
           "
-      
+
       - name: 更新核查日期
         run: |
           TODAY=$(date +%Y-%m-%d)
-          # 更新 index.html 中的核查日期
+          # 更新 index.html 中的核查日期与各省份 chk 字段
           sed -i "s/数据核查日期 [0-9-]*/数据核查日期 ${TODAY}/" index.html || true
-          # 更新各省份 chk 字段
-          sed -i "s/chk:\"[0-9-]*\"/chk:\"${TODAY}\"/g" data.js || true
-          
+          sed -i "s/chk:\"[0-9-]*\"/chk:\"${TODAY}\"/g" index.html || true
+
           git config user.name "github-actions"
           git config user.email "action@github.com"
-          
+
           if git diff --quiet; then
             echo "无数据变化，跳过提交"
           else
